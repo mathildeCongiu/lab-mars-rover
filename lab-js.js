@@ -21,7 +21,7 @@ let grid = [
   [' ',' ',' ',' ',' ',' ',' ',' ','O',' '],
   [' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
   [' ',' ',' ',' ','O',' ',' ',' ',' ',' '],
-  [' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+  [' ',' ',' ',' ',' ','X',' ',' ',' ',' '],
   [' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
   [' ',' ','O',' ',' ',' ',' ',' ',' ',' '],
   [' ',' ',' ',' ',' ',' ',' ',' ','O',' '],
@@ -88,6 +88,10 @@ function moveForward(rover) {
           rover.registeredObstacles.push(rover.x, rover.y);
           rover.x++
         }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go forward because there is another rover");
+          rover.x++
+        }
         else {
           grid[rover.x][rover.y] = "|"
         }
@@ -97,6 +101,10 @@ function moveForward(rover) {
         if (grid[rover.x][rover.y] === "O") {
           console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
           rover.registeredObstacles.push(rover.x, rover.y);
+          rover.x--
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go forward because there is another rover");
           rover.x--
         }
         else {
@@ -110,6 +118,10 @@ function moveForward(rover) {
           rover.registeredObstacles.push(rover.x, rover.y);
           rover.y--
         }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go forward because there is another rover")
+          rover.y --
+        }
         else {
           grid[rover.x][rover.y] = "-"
         }
@@ -119,6 +131,10 @@ function moveForward(rover) {
         if (grid[rover.x][rover.y] === "O") {
           console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
           rover.registeredObstacles.push(rover.x, rover.y);
+          rover.y++
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go forward because there is another rover");
           rover.y++
         }
         else {
@@ -140,8 +156,12 @@ function moveBackward(rover) {
       case "N":
         rover.x++;
         if (grid[rover.x][rover.y] === "O") {
-          console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
+          console.log("Rover can't go backward because there is an obstacle. Registering the obstacle into the database...");
           rover.registeredObstacles.push(rover.x, rover.y);
+          rover.x--
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go backward because there is another rover");
           rover.x--
         }
         else {
@@ -151,8 +171,12 @@ function moveBackward(rover) {
       case "S":
         rover.x--;
         if (grid[rover.x][rover.y] === "O") {
-          console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
+          console.log("Rover can't go backward because there is an obstacle. Registering the obstacle into the database...");
           rover.registeredObstacles.push(rover.x, rover.y);
+          rover.x++
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go backward because there is another rover");
           rover.x++
         }
         else {
@@ -162,8 +186,12 @@ function moveBackward(rover) {
       case "E":
         rover.y--;
         if (grid[rover.x][rover.y] === "O") {
-          console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
+          console.log("Rover can't go backward because there is an obstacle. Registering the obstacle into the database...");
           rover.registeredObstacles.push(rover.x, rover.y);
+          rover.y++
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go backward because there is another rover");
           rover.y++
         }
         else {
@@ -173,7 +201,7 @@ function moveBackward(rover) {
       case "W":
         rover.y++;
         if (grid[rover.x][rover.y] === "O") {
-          console.log("Rover can't go forward because there is an obstacle. Registering the obstacle into the database...");
+          console.log("Rover can't go backward because there is an obstacle. Registering the obstacle into the database...");
 
           //let obstaclePosition = { x: rover.x, y: rover.y };
           //for (j = 0; j< rover.registeredObstacles; j++) {
@@ -182,6 +210,10 @@ function moveBackward(rover) {
             //}
           //}
 
+          rover.y--
+        }
+        else if (grid[rover.x][rover.y] !== " ") {
+          console.log("Rover can't go backward because there is another rover");
           rover.y--
         }
         else {
@@ -198,22 +230,22 @@ function moveBackward(rover) {
 // This function unifies the different functions declared before and enables the rover to receive various orders
 function command(rover, orders) {
   for (let i = 0; i< orders.length; i++) {
-    let order = orders[i]
-    switch(order) {
-      case "l":
-        turnLeft(rover);
-        break;
-      case "r":
-        turnRight(rover);
-        break;
-      case "f":
-        moveForward(rover);
-        break;
-      case "b":
-        moveBackward(rover);
-        break;
-      default: 
-        console.log("Please enter a correct command. i: 'f' for forward, 'b' for backward, 'l' for left or 'r' for right")
+      let order = orders[i]
+      switch(order) {
+        case "l":
+          turnLeft(rover);
+          break;
+        case "r":
+          turnRight(rover);
+          break;
+        case "f":
+          moveForward(rover);
+          break;
+        case "b":
+          moveBackward(rover);
+          break;
+        default: 
+          console.log("Please enter a correct command. i: 'f' for forward, 'b' for backward, 'l' for left or 'r' for right")
     }
     console.log(`Rover is on ${rover.x} and ${rover.y}.`);
   }
@@ -229,14 +261,16 @@ function command(rover, orders) {
   }
 
 // Please enter your commands here
-//command(rover, "tt)")
+
+// Enter the orders of the fisrt rover
+command(rover, "rrffffflffffff")
+
+//Enter the orders of the second rover
+command(rover2, "bbbbbbb")
+
+
 //command(rover, "ffrfflfrff")
-//command(rover2, "bbbbbbb")
-//command(rover, "rf")
-command(rover,"rrfff")
 
-
-  //add Other Rovers - Add additional rovers to the map. Have them take turns moving. If one rover is going to run into the other, you should stop the rover and console.log a message saying so. => try to add a boolean to make turn
  // correct push of obstacles into rover's database
  //add comments */
 
