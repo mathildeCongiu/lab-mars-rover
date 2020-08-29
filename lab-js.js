@@ -36,48 +36,56 @@ function turnLeft(rover) {
     console.log('turnLeft was called!');
     switch(rover.direction) {
       case "N":
-        rover.direction = "W"
-        console.log("Rover is now in West direction !")
+        rover.direction = "W";
+        grid[rover.x][rover.y] = "-";
+        console.log("Rover is now in West direction!");
         break;
       case "S":
-        rover.direction = "E"
-        console.log("Rover is now in East direction !")
+        rover.direction = "E";
+        grid[rover.x][rover.y] = "-";
+        console.log("Rover is now in East direction!");
         break;
       case "E":
-        rover.direction = "N"
-        console.log("Rover is now in North direction !")
+        rover.direction = "N";
+        grid[rover.x][rover.y] = "|";
+        console.log("Rover is now in North direction!");
         break;
       case "W":
-        rover.direction = "S"
-        console.log("Rover is now in South direction !")
+        rover.direction = "S";
+        grid[rover.x][rover.y] = "|";
+        console.log("Rover is now in South direction!");
     }
   }
 
 
- function turnRight(rover) {
+function turnRight(rover) {
   console.log('turnRight was called!');
   switch(rover.direction) {
     case "N":
-      rover.direction = "E"
-      console.log("Rover is now in East direction !")
+      rover.direction = "E";
+      grid[rover.x][rover.y] = "-";
+      console.log("Rover is now in East direction!");
       break;
     case "S":
-      rover.direction = "W"
-      console.log("Rover is now in West direction !")
+      rover.direction = "W";
+      grid[rover.x][rover.y] = "-";
+      console.log("Rover is now in West direction!");
       break;
     case "E":
-      rover.direction = "S"
-      console.log("Rover is now in South direction !")
+      rover.direction = "S";
+      grid[rover.x][rover.y] = "|";
+      console.log("Rover is now in South direction!");
       break;
     case "W":
-      rover.direction = "N"
-      console.log("Rover is now in North direction !")
+      rover.direction = "N";
+      grid[rover.x][rover.y] = "|";
+      console.log("Rover is now in North direction!");
   }
 }
 
 // These two functions enable the rover to move one step forward or backward on the grid
 function moveForward(rover) {
-  console.log("moveForward was called !");
+  console.log("moveForward was called!");
   if (rover.x === 0 && rover.direction === "N" || rover.x === 9 && rover.direction === "S" || rover.y === 0 && rover.direction === "W" || rover.y === 9 && rover.direction === "E") {
     console.log("Move aborted. You can't go forward otherwise rover would be untracked")
   }
@@ -90,13 +98,14 @@ function moveForward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.x++
         }
-        else if (grid[rover.x][rover.y] !== " ") {
-          console.log("Rover can't go forward because there is another rover");
-          rover.x++
-        }
-        else {
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|"){
           grid[rover.x][rover.y] = "|"
         }
+        else {
+          console.log("Rover can't go forward because there is another rover.");
+          rover.x++
+        }
+
         break;
       case "S":
         rover.x++;
@@ -105,13 +114,14 @@ function moveForward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.x--
         }
-        else if (grid[rover.x][rover.y] !== " ") {
+        else  if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|"){
+          grid[rover.x][rover.y] = "|"
+        }
+        else {
           console.log("Rover can't go forward because there is another rover");
           rover.x--
         }
-        else {
-          grid[rover.x][rover.y] = "|"
-        }
+
         break;
       case "E":
         rover.y++;
@@ -120,13 +130,14 @@ function moveForward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.y--
         }
-        else if (grid[rover.x][rover.y] !== " ") {
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|"){
+          grid[rover.x][rover.y] = "-"
+        }
+        else {
           console.log("Rover can't go forward because there is another rover")
           rover.y --
         }
-        else {
-          grid[rover.x][rover.y] = "-"
-        }
+
         break;
       case "W":
         rover.y--;
@@ -135,13 +146,14 @@ function moveForward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.y++
         }
-        else if (grid[rover.x][rover.y] !== " ") {
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|") {
+          grid[rover.x][rover.y] = "-"
+        }
+        else {
           console.log("Rover can't go forward because there is another rover");
           rover.y++
         }
-        else {
-          grid[rover.x][rover.y] = "-"
-        }
+
         break;
     }
     let newPosition = { x: rover.x, y: rover.y};
@@ -150,7 +162,7 @@ function moveForward(rover) {
 }
 
 function moveBackward(rover) {
-  console.log("moveBacward was called !");
+  console.log("moveBacward was called!");
   if (rover.x === 9 && rover.direction === "N" || rover.x === 0 && rover.direction === "S" || rover.y === 9 && rover.direction === "W" || rover.y === 0 && rover.direction === "E") {
     console.log("Move aborted. You can't go backward otherwise rover would be untracked")
   }
@@ -163,13 +175,14 @@ function moveBackward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.x--
         }
-        else if (grid[rover.x][rover.y] !== " ") {
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|") {
+          grid[rover.x][rover.y] = "|"
+        }
+        else  {
           console.log("Rover can't go backward because there is another rover");
           rover.x--
         }
-        else {
-          grid[rover.x][rover.y] = "|"
-        }
+
         break;
       case "S":
         rover.x--;
@@ -178,12 +191,13 @@ function moveBackward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.x++
         }
-        else if (grid[rover.x][rover.y] !== " ") {
-          console.log("Rover can't go backward because there is another rover");
-          rover.x++
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|")
+        {
+          grid[rover.x][rover.y] = "|"
         }
         else {
-          grid[rover.x][rover.y] = "|"
+          console.log("Rover can't go backward because there is another rover");
+          rover.x++
         }
         break;
       case "E":
@@ -193,12 +207,12 @@ function moveBackward(rover) {
           rover.registeredObstacles.push({x: rover.x, y: rover.y});
           rover.y++
         }
-        else if (grid[rover.x][rover.y] !== " ") {
-          console.log("Rover can't go backward because there is another rover");
-          rover.y++
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|"){
+          grid[rover.x][rover.y] = "-"
         }
         else {
-          grid[rover.x][rover.y] = "-"
+          console.log("Rover can't go backward because there is another rover");
+          rover.y++
         }
         break;
       case "W":
@@ -207,13 +221,14 @@ function moveBackward(rover) {
           console.log("Rover can't go backward because there is an obstacle. Registering the obstacle into the database...");
           rover.y--
         }
-        else if (grid[rover.x][rover.y] !== " ") {
+        else if (grid[rover.x][rover.y] === " " || grid[rover.x][rover.y] === "-" || grid[rover.x][rover.y] === "|"){
+          grid[rover.x][rover.y] = "-"
+        }
+        else  {
           console.log("Rover can't go backward because there is another rover");
           rover.y--
         }
-        else {
-          grid[rover.x][rover.y] = "-"
-        }
+
         break;
     }
     let newPosition = { x: rover.x, y: rover.y};
@@ -253,6 +268,7 @@ function command(rover, orders) {
   for (let i = 0; i < rover.travelLog.length; i++) {
     console.log(`Move nº${i +1} ==> Rover was in x=${rover.travelLog[i].x}, y=${rover.travelLog[i].y}`);
   };
+  console.log("\n");
   for (let j= 0; j< rover.registeredObstacles.length; j++) {
     console.log(`Obstacle nº${j+1} is located on x=${rover.registeredObstacles[j].x}, y=${rover.registeredObstacles[j].y}`);
   };
@@ -266,7 +282,7 @@ function command(rover, orders) {
 command(rover, "rfjrfffflffffrflff")
 
 //Enter the orders of the second rover
-command(rover2, "bbbbbbb")
+command(rover2, "bbbbbbrfflffffff")
 
 
 //command(rover, "ffrfflfrff")
@@ -280,5 +296,4 @@ command(rover2, "bbbbbbb")
           //}
 
  // Check if it is necessary to add a new variable for newObstacle as far as it is the same variable as newPosition
-// newObsctacle pushed wrongly
-  
+ //Pb with letter X
