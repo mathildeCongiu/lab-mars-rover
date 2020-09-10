@@ -262,7 +262,7 @@ function command(rover, orders) {
         default: 
           console.log("Please enter a correct command. i: 'f' for forward, 'b' for backward, 'l' for left or 'r' for right.")
     }
-    console.log(`Rover is on ${rover.x} and ${rover.y}.`);
+    console.log(`Rover is on x=${rover.x} and y=${rover.y}.`);
   }
   console.log("Commands over. Please enter a new serie of commands to move the rover. \n\n **************** \n Grid view \n");
 
@@ -274,7 +274,11 @@ function command(rover, orders) {
     console.log(`Move nº${i +1} ==> Rover was in x=${rover.travelLog[i].x}, y=${rover.travelLog[i].y}`);
   };
   console.log("\n");
-  for (let j= 0; j< rover.registeredObstacles.length; j++) {
+  if (rover.registeredObstacles.length == false) {
+    console.log("No obstacle registered")
+  }
+  else {
+    for (let j= 0; j< rover.registeredObstacles.length; j++)
     console.log(`Obstacle nº${j+1} is located on x=${rover.registeredObstacles[j].x}, y=${rover.registeredObstacles[j].y}`);
   };
 
@@ -288,29 +292,29 @@ function command(rover, orders) {
 command(rover, "rfjrfffflffffrflff")
 
 //Enter the orders of the second rover
-command(rover2, "bbbbbbrfflffffff")
+//command(rover2, "bbbbbbrfflffffff")
 
 
 //------------- Second serie of commands //-------------
 // Enter new orders for the fisrt rover
-command(rover, "rfjrfffflffffrflff")
+//command(rover, "rfjrfffflffffrflff")
 
 //Enter new orders for the second rover
-command(rover2, "bbbbbbrfflffffff")
+//command(rover2, "bbbbbbrfflffffff")
 
 //command(rover, "ffrfflfrff")
 
 
 //Possible enhancement for the script:
 
- // Avoided to add two times an obstacle 
-           //let obstaclePosition = { x: rover.x, y: rover.y };
-          //for (j = 0; j< rover.registeredObstacles; j++) {
-            //if (registeredObstacles[j] !== obstaclePosition) {
-             // rover.registeredObstacles.push(obstaclePosition);
-            //}
-          //}
+ /* Avoid to add two times an obstacle 
+           let obstaclePosition = { x: rover.x, y: rover.y };
+          for (j = 0; j< rover.registeredObstacles; j++) {
+            if (registeredObstacles[j] !== obstaclePosition) {
+             rover.registeredObstacles.push(obstaclePosition);
+            }
+          }
 
- // Check if it is necessary to add a new variable for newObstacle as far as it is the same variable as newPosition
- // It would be nice to erase the path after the two rovers have done the first serie of commands
- // Change rovers variables into class rover
+ Check if it is necessary to add a new variable for newObstacle as far as it is the same variable as newPosition
+ It would be nice to erase the path after the two rovers have done the first serie of commands
+ Change rovers variables into class rover*/
