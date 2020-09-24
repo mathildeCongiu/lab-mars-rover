@@ -54,7 +54,11 @@ function turnLeft(rover) {
       case "W":
         rover.direction = "S";
         console.log("Rover is now in South direction!");
+      default: 
+        console.log("The direction has not been recognized");
+
     }
+    
   }
 
 
@@ -76,6 +80,8 @@ function turnRight(rover) {
     case "W":
       rover.direction = "N";
       console.log("Rover is now in North direction!");
+    default: 
+      console.log("The direction has not been recognized");
   }
 }
 
@@ -156,6 +162,8 @@ function moveForward(rover) {
         }
 
         break;
+      default: 
+        console.log("The direction has not been recognized");
     }
     let newPosition = { x: rover.x, y: rover.y};
     rover.travelLog.push(newPosition);
@@ -235,6 +243,8 @@ function moveBackward(rover) {
         }
 
         break;
+      default: 
+        console.log("The direction has not been recognized");
     }
     let newPosition = { x: rover.x, y: rover.y};
     rover.travelLog.push(newPosition);
